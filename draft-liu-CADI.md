@@ -7,7 +7,7 @@ lang: en
 
 title: Cryptographic Asset Discovery and Inventory
 abbrev: CADI
-docname: draft-liu-CADI
+docname: draft-liu-cadi-00
 obsoletes: 
 updates:
 date: 
@@ -28,13 +28,10 @@ author:
   country: China
 
 normative:
-  RFC8205:
   RFC9849:
   RFC9347:
 
 informative:
-  RFC9217: 
-  I-D.ietf-sfc-proof-of-transit-08: CISCOPOT
   G7:
     title: Advancing a Coordinated Roadmap for the Transition to Post-Quantum Cryptography in the Financial Sector
     date: 2026-01
@@ -58,12 +55,13 @@ informative:
   MERCURY:
     title: Mercury - network metadata capture and analysis.
     target: https://github.com/cisco/mercury/
-   IBMCBOM:
+  IBMCBOM:
     title: CBOM
     target: https://github.com/IBM/CBOM
-   CDXGEN:
+  CDXGEN:
     title: CycloneDX Generator
     target: https://github.com/cdxgen/cdxgen
+    
 --- abstract
 
 This document compiles existing Cryptographic Asset Discovery and Inventory (CADI) methods and analyze potential gaps.
@@ -86,7 +84,7 @@ Although the exact PQ-migration roadmap in each different nations varies, the fa
 # Terminology {#term}
 
 * CADI (Cryptographic Asset Discovery and Inventory) -- A set of tools and guidelines designed to automate the identification, collection, normalization, correlation, and lifecycle management of an organization's cryptographic assets.
-* Cryptographic Asset -- A digital or physical element within a device or service—such as an algorithm, module, configuration, credential, secret, or communication protocol—that protects the confidentiality and integrity of secure data transmission or storage.
+* Cryptographic Asset -- A digital or physical element within a device or service-such as an algorithm, module, configuration, credential, secret, or communication protocol-that protects the confidentiality and integrity of secure data transmission or storage.
 * Cryptographic System -- An active software or hardware implementation of one or more cryptographic algorithms that provide one or more of the following services: (1) creation and exchange of encryption keys; (2) encrypted connections; or (3) creation and validation of digital signatures. (according to {{OMBM2302}})
 * Cryptographically Relevant Quantum Computers (CRQC) -- A fault-tolerant quantum system capable of solving the underlying hardness assumption problems of widely used public-key cryptography in polynomial time, such as RSA and ECC.
 
@@ -155,15 +153,15 @@ CBOM data specification: A standardized cryptographic asset object includes cryp
  {
   "name": "google.com",
   "type": "cryptographic-asset",
-  "bom-ref": "crypto/certificate/google.com@sha256:1e15e0fbd3ce95bde5945633ae96add551341b11e5bae7bba12e98ad84a5beb4",
+  "bom-ref": "crypto/certificate/google.com@sha256:1e15e0fbd3ce9...",
   "cryptoProperties": {
     "assetType": "certificate",
     "certificateProperties": {
       "subjectName": "CN = www.google.com",
-      "issuerName": "C = US, O = Google Trust Services LLC, CN = GTS CA 1C3",
+      "issuerName": "C = US, O = Google Trust ... LLC, CN = GTS CA 1C3",
       "notValidBefore": "2016-11-21T08:00:00Z",
       "notValidAfter": "2017-11-22T07:59:59Z",
-      "signatureAlgorithmRef": "crypto/algorithm/sha-512-rsa@1.2.840.113549.1.1.13",
+      "signatureAlgorithmRef": "crypto/algorithm/sha-512-rsa@1.2.840..",
       "subjectPublicKeyRef": "crypto/key/rsa-2048@1.2.840.113549.1.1.1",
       "certificateFormat": "X.509",
       "certificateExtension": "crt"
