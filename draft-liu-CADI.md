@@ -23,7 +23,7 @@ title: Cryptographic Asset Discovery and Inventory
 abbrev: CADI
 category: info
 
-docname: draft-liu-CADI-latest
+docname: draft-liu-CADI
 submissiontype: IETF  # also: "independent", "editorial", "IAB", or "IRTF"
 number:
 date:
