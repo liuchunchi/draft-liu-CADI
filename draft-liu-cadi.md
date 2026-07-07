@@ -7,7 +7,7 @@ lang: en
 
 title: Cryptographic Asset Discovery and Inventory
 abbrev: CADI
-docname: draft-liu-cadi-00
+docname: draft-liu-cadi-latest
 obsoletes: 
 updates:
 date: 
