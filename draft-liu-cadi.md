@@ -8,12 +8,12 @@ lang: en
 title: Cryptographic Asset Discovery and Inventory
 abbrev: CADI
 docname: draft-liu-cadi-latest
-obsoletes: 
+obsoletes:
 updates:
-date: 
+date:
 
-area: 
-workgroup: 
+# area:
+# workgroup:
 
 kw:
   - CADI
@@ -61,7 +61,7 @@ informative:
   CDXGEN:
     title: CycloneDX Generator
     target: https://github.com/cdxgen/cdxgen
-    
+
 --- abstract
 
 This document compiles existing Cryptographic Asset Discovery and Inventory (CADI) methods and analyze potential gaps.
@@ -74,7 +74,7 @@ Cryptographic Asset Discovery and Inventory (CADI) refers to a set of tools and 
 
 Many Post-Quantum transition roadmaps have highlighted the importance of identifying legacy cryptographic assets inside of an organization as a crucial preparatory part. For example:
 
-* The G7 statement on "Advancing a Coordinated Roadmap for the Transition to Post-Quantum Cryptography in the Financial Sector" {{G7}} mentions there should exist six key PQ-migration activities: 
+* The G7 statement on "Advancing a Coordinated Roadmap for the Transition to Post-Quantum Cryptography in the Financial Sector" {{G7}} mentions there should exist six key PQ-migration activities:
     * Awareness and Preparation, **Discovery and Inventory**, Risk Assessment and Planning, Migration Execution, Migration Testing, Validation and Monitoring. The exact six stages are also published in NCCoE analysis on "Six Key Phases of the PQC Migration Journey" {{NCCOEFAQ}}.
 * The United States Memorandum for the Heads of Executive Departments and Agencies on "Migrating to Post-Quantum Cryptography" {{OMBM2302}} requires:
     * All federal agencies to "**Submit cryptographic system inventory By May 4, 2023 and annually thereafter**". This important date is also mentioned in CISA directive "Strategy for Migrating to Automated Post-Quantum Cryptography Discovery and Inventory Tools"{{CISAACDI}}.
@@ -93,8 +93,8 @@ Although the exact PQ-migration roadmap in each different nations varies, the fa
 Apart from the milestones and requirements discussed above, there are also a few challenges to identify cryptographic assets:
 
 * Legacy ICT systems were not engineered to treat cryptographic primitives as distinct, trackable assets. Instead, cryptographic implementations are deeply integrated, highly distributed, and hidden across heterogeneous layers of the technology stack.
-* Taking inventory manually would take enormous amount of effort, yet there may still be statistical omissions that leave security exposures. 
-* Methods like Cryptographic Bill of Materials (CBOM) only take effect on new devices to self-announce its cryprographic assets, but it cannot help identify legacy devices and systems. 
+* Taking inventory manually would take enormous amount of effort, yet there may still be statistical omissions that leave security exposures.
+* Methods like Cryptographic Bill of Materials (CBOM) only take effect on new devices to self-announce its cryprographic assets, but it cannot help identify legacy devices and systems.
 * Legacy devices and systems often behave like blackboxes, many does not allow installing additional programs or tools on them.
 
 As a result, the ideal CADI tool should meet the following requirements:
@@ -134,12 +134,12 @@ Scanning Methods:
     * Scan for algorithmic constants, signatures; Extract from OS trust stores and runtime configurations... The process details are omitted in this document due to complexity.
         * Binary / Image Scanning is used by IBM CBOMKit-Theia and CycloneDX Cdxgen.
 
-Tools and Modelling: 
+Tools and Modelling:
 * **IBM CBOMkit**, Static code level scanning (Hyperion) and Artifact level scanning (Theia) {{IBMCBOM}}: uses `implements` and `uses` relationship to create dependency diagram.
     * `implements`: Describes the list of protocols or algorithms this module implements.
     * `uses`: Describes what modules are used by this service.
     * For example, Application Nginx `uses` Library `libssl.so` that `uses` Protocol TLS v1.3/v1.2 that `uses` `libcrypto.so` that `implements` Algorithm MD5, SHA256, AES-128-GCM.
-* **CycloneDX Cdxgen**, Artifact level scanning {{CDXGEN}}: uses `dependsOn` and `provides` relationship to create dependency diagram. 
+* **CycloneDX Cdxgen**, Artifact level scanning {{CDXGEN}}: uses `dependsOn` and `provides` relationship to create dependency diagram.
     * `dependsOn`: Describes other modules or services this module depends on.
     * `provides`: Describes all capabilities this module provides.
     * For example, Application Nginx `dependsOn` Library `libssl.so` , which `provides` TLS 1.2.
@@ -176,7 +176,7 @@ Gaps: Obviously, this does not help with identifying the mass legacy devices, co
 
 ### Simulated Handshakes
 
-Simulated handshake is a network-probing technique where a discovery tool acts as a client and intentionally initiates cryptographic protocol negotiations (e.g., TLS, SSH, IPsec) with enterprise network endpoints without completing the full data session. During the negotiation process, the discovery tool determines the specific cryptographic protocol versions, negotiation mechanisms, and ciphersuites supported by the endpoint. This is also known as *Active Probing*. 
+Simulated handshake is a network-probing technique where a discovery tool acts as a client and intentionally initiates cryptographic protocol negotiations (e.g., TLS, SSH, IPsec) with enterprise network endpoints without completing the full data session. During the negotiation process, the discovery tool determines the specific cryptographic protocol versions, negotiation mechanisms, and ciphersuites supported by the endpoint. This is also known as *Active Probing*.
 
 Steps of simulated handshake include:
 1. **Port Scan:** The tool scans for typical ports for specific secure communication protocols (443 for HTTPS, 22 for SSH, etc)
@@ -189,11 +189,11 @@ This works for most secure protocols that includes negotiation:
 * TLS
 * SSH
 
-Pros and Cons/Gaps: 
+Pros and Cons/Gaps:
 * Strengths:
     * This kind of method does not require complex engineering refactoring. Since it is agnostic to the design of the target, it works best for the case where the manager operates vast heteogenous devices from different vendors, versions and locations, hence telecommunications case.
-    * This probing is one-time, thus it will not create unhandleable amount of probing packets. 
-* The limitation of this method is that 
+    * This probing is one-time, thus it will not create unhandleable amount of probing packets.
+* The limitation of this method is that
     * Some masking mechanism will stop the probing (firewalls, load balancers, port-concealing protocols like Single Packet Authorization that enforce a default drop for unexpected packets), leaving a hidden security posture inside of the system.
     * Network management cannot know local application components that rests internally in the device and are not exposed over a socket.
 
@@ -209,10 +209,10 @@ Methods of Traffic Pattern Analysis includes:
 * Listen to handshake fingerprints and compare them to existing patterns, as protocol implementations and behaviors are often rigid.
 * Listen to packet length and arrival time, do statistical pattern recognition.
 
-Pros and Cons/Gaps: 
+Pros and Cons/Gaps:
 * Strengths:
     * Similar to Simulated Handshakes, this kind of method is not intrusive and is agnostic to the design of the target.
-* The limitation of this method is that 
+* The limitation of this method is that
     * Negotiation information like `clientHello` {{RFC9849}} and SNI are tending to be encrypted.
     * Protocols tend to have constant size packets {{RFC9347}}.
     * Alternative routing: network requests/responses could exit through a different routing path.
@@ -226,10 +226,10 @@ Methods of Process Identification includes:
 * Shared Library and Binary Hooking, by monitoring process load table to see if cryptographic dynamic libraries are loaded into the memory space.
 * Live Memory Scanning, by periodically scanning volatile memory for indication of creation of keys or signatures (as high-entropy memory segments), and then compare them with known patterns.
 
-Pros and Cons/Gaps: 
+Pros and Cons/Gaps:
 * Strengths:
     * Have deeper visibility for cryptographic assets within devices.
-* The limitation of this method is that 
+* The limitation of this method is that
     * Requires loading new software (at least EDR/RDR) to legacy devices.
     * Potential blind spots due to lower pattern coverage.
 
